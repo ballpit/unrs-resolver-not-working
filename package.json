@@ -1,0 +1,62 @@
+{
+  "name": "unrs-resolver-not-working",
+  "description": "WIP - nothing to see here",
+  "version": "0.0.0",
+  "author": "Bret Comnes <bcomnes@gmail.com> (https://bret.io)",
+  "bugs": {
+    "url": "https://github.com/bcomnes/unrs-resolver-not-working/issues"
+  },
+  "devDependencies": {
+    "@types/node": "^22.1.0",
+    "@voxpelli/tsconfig": "^15.1.2",
+    "auto-changelog": "^2.0.0",
+    "c8": "^10.0.0",
+    "gh-release": "^7.0.0",
+    "neostandard": "^0.12.0",
+    "npm-run-all2": "^7.0.1",
+    "typescript": "~5.8.2"
+  },
+  "engines": {
+    "node": ">=20",
+    "npm": ">=10"
+  },
+  "homepage": "https://github.com/bcomnes/unrs-resolver-not-working",
+  "keywords": [],
+  "license": "MIT",
+  "type": "module",
+  "module": "index.js",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bcomnes/unrs-resolver-not-working.git"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run build && git push --follow-tags && gh-release -y",
+    "postpublish": "npm run clean",
+    "test": "run-s test:*",
+    "test:lint": "eslint .",
+    "test:tsc": "tsc",
+    "test:node-test": "c8 node --test --test-reporter spec",
+    "version": "run-s version:*",
+    "version:changelog": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING CHANGE:'",
+    "version:git": "git add CHANGELOG.md",
+    "build": "npm run clean && run-p build:*",
+    "build:declaration": "tsc -p declaration.tsconfig.json",
+    "clean": "run-p clean:*",
+    "clean:declarations-top": "rm -rf $(find . -maxdepth 1 -type f -name '*.d.ts*')",
+    "clean:js-top": "rm -rf $(find . -maxdepth 1 -type f -name '*.js' ! -name '*.config.js')",
+    "clean:declarations-lib": "rm -rf $(find lib -type f -name '*.d.ts*' ! -name '*-types.d.ts')",
+    "clean:js-lib": "rm -rf $(find lib -type f -name '*.js')"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/bcomnes"
+  },
+  "c8": {
+    "reporter": [
+      "lcov",
+      "text"
+    ]
+  }
+}
